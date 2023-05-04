@@ -6,6 +6,18 @@ $('#add-category-form').submit(function (event) {
     $('#category-name').val('');
 });
 
+//limpar hábitos
+$('#AC-btn').on("click", function (event) {
+    event.preventDefault();
+    for(let r=0;r<parseInt(localStorage.getItem("lenght"));r++){
+        $('.habit-body').empty();
+    }
+
+    allclearHForm();
+    listHabits = [];
+    localStorage.clear();
+});
+
 // adicionar hábito
 $('#add-habit-form').submit(function (event) {
     event.preventDefault();
@@ -19,21 +31,26 @@ $('#add-habit-form').submit(function (event) {
     <tr>
         <td class="border px-4 py-2">${habName}</td>
         <td class="border px-4 py-2">${habCat}</td>
-        <td class="border px-4 py-2">${habType}</td>
-        <td class="border px-4 py-2">${habPt}</td>
+        <td class="border px-4 py-2">${type2Elm(habType)}</td>
+        <td class="border px-4 py-2">${imp2PTS(habPt, habType)}</td>
         <td class="border px-4 py-2">${habDesc}</td>
     </tr>
     `
     $('.habit-body').append(appendHTMLNow);
     listHabits.push(appendHTMLNow);
 
-    localStorage.setItem(`${typeof(appendHTMLNow)}${i}`, appendHTMLNow);
+    i = localStorage.getItem("lenght");
     i++;
+    localStorage.setItem(`row${i}`, appendHTMLNow);
     localStorage.setItem("lenght", i);
 
+    allclearHForm();
+});
+
+function allclearHForm() {
     $('#habit-name').val('');
     $('#habit-category').val('');
     $('#habit-type').val('');
     $('#habit-points').val('');
     $('#habit-description').val('');
-});
+}
